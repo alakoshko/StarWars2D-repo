@@ -6,17 +6,24 @@ namespace StarWars
 {
     class Bullet : GameObject
     {
-        public Bullet(BaseObjectParams param) : base(param)
+        private int _Power { get; set; }
+
+        public Bullet(BaseObjectParams param, int Power) : base(param)
         {
+            _Power = Power;
         }
         public override void Draw()
         {
-            Game.Buffer.Graphics.DrawRectangle(Pens.OrangeRed, _Position.X, _Position.Y, _Size.Width,
-            _Size.Height);
+            Game.Buffer.Graphics.DrawRectangle(Pens.OrangeRed, new Rectangle(_Position, _Size));
         }
         public override void Update()
         {
-            _Position.X = _Position.X + 3;
+            _Position.X = _Position.X + _Speed.X;
+        }
+
+        public int Power()
+        {
+            return _Power;
         }
     }
 }

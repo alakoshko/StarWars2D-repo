@@ -16,6 +16,11 @@ namespace StarWars
         /// <summary>Массив графических игровых объекотв</summary>
         private static GameObject[] __GameObjects;
 
+        private static Asteroid[] __Asteroids;
+
+        private static Bullet __Bullet;
+
+        
         /// <summary>Буфер, в который будем проводить отрисовку графики очередного кадра</summary>
         public static BufferedGraphics Buffer { get; private set; }
 
@@ -24,9 +29,7 @@ namespace StarWars
         /// <summary>Высота игрового поля</summary>
         public static int Height { get; private set; }
 
-
-        private static Bullet _bullet;
-        private static Asteroid[] _asteroids;
+        
 
 
         /*static Button btnNew;
@@ -41,43 +44,56 @@ namespace StarWars
 
             __GameObjects = new GameObject[30];
 
-            //for (var i = 0; i < __GameObjects.Length / 2; i++)
-            //    __GameObjects[i] = new GameObject(
-            //        new Point(600, i * 20),
-            //        new Point(15 - i, 15 - i),
-            //        new Size(20, 20));
-
-            //for (var i = __GameObjects.Length / 2; i < __GameObjects.Length; i++)
-            //    __GameObjects[i] = new Star(
-            //        new Point(600, i * 20),
-            //        new Point(i, 0),
-            //        new Size(5, 5));
-
-            _bullet = new Bullet(
-                    new BaseObjectParams
-                    {
-                        Position = new Point(0, 200),
-                        Speed = new Point(5, 0),
-                        Size = new Size(4, 1)
-                    });
-
-
+            
             var rnd = new Random();
 
+            //Звезды
             for (var i = 0; i < __GameObjects.Length; i++)
             {
                 int r = rnd.Next(5, 50);
-
+                var size = rnd.Next(3, 15);
                 __GameObjects[i] = new Star(
                     new BaseObjectParams
                     {
                         Position = new Point(Width, (rnd.Next(0, Height) ) ),
                         Speed = new Point(rnd.Next(0, i), 0),
-                        Size = new Size(rnd.Next(3, 15), rnd.Next(3, 15))
+                        Size = new Size(size, size)
                     });
             }
 
-            _asteroids = new Asteroid[3];
+            //Астероиды
+            const int asteroids_count = 10;
+            __Asteroids = new Asteroid[asteroids_count];
+
+            for (var i = 0; i < asteroids_count; i++)
+            {
+                var speed = rnd.Next(3, 10);
+                
+                var size = rnd.Next(25, 100);
+                var Power = size / 10;
+                __Asteroids[i] = new Asteroid(
+                    new BaseObjectParams
+                    {
+                        Position = new Point(rnd.Next(0, Width), rnd.Next(0, Height)),
+                        Speed = new Point(speed, (rnd.Next(1, speed)%2 == 0) ? -rnd.Next(1, speed): rnd.Next(1, speed)),
+                        Size = new Size(size, size)
+                    },
+                    Power
+                );
+            }
+
+
+            //Пули
+            const int BulletPower = 1;
+
+            __Bullet = new Bullet(
+                new BaseObjectParams
+                {
+                    Position = new Point(0, 200),
+                    Speed = new Point(3, 0),
+                    Size = new Size(4, 1)
+                },
+                BulletPower);
         }
 
         /// <summary>Инициализация игровой логики</summary>
@@ -119,6 +135,12 @@ namespace StarWars
             foreach (var game_object in __GameObjects)
                 game_object.Draw();
 
+            //рисуем астероиды
+            foreach (var asteroid_obj in __Asteroids)
+                asteroid_obj.Draw();
+
+            __Bullet.Draw();
+
             Buffer.Render(); // Переносим содержимое буфера на экран
         }
 
@@ -128,6 +150,36 @@ namespace StarWars
             // Пробегаемся по всем игровым объектам
             foreach (var game_object in __GameObjects)
                 game_object.Update(); // И вызываем у каждого метод обновления состояния
+
+            //Запустили пулю
+            __Bullet.Update();
+
+            Random rnd = new Random();
+
+            //Двигаем астероиды
+            for (var i = 0; i < __Asteroids.Length; i++)
+            {
+                __Asteroids[i].Update();
+                if (__Asteroids[i].Collision(__Bullet))
+                    __Asteroids[i].Power -= __Bullet.Power();
+
+                if (__Asteroids[i].Power <= 0)
+                {
+                    var speed = rnd.Next(3, 10);
+                    var Power = rnd.Next(1, 5);
+                    var size = rnd.Next(25, 100);
+                    __Asteroids[i] = new Asteroid(
+                        new BaseObjectParams
+                        {
+                            Position = new Point(rnd.Next(0, Width), rnd.Next(0, Height)),
+                            Speed = new Point(speed, (rnd.Next(1, speed) % 2 == 0) ? -rnd.Next(1, speed) : rnd.Next(1, speed)),
+                            Size = new Size(size, size)
+                        },
+                        Power
+                    );
+                }
+            }
+            
         }
     }
 }
