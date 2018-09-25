@@ -121,4 +121,22 @@
   <data name="bigStar2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\bigStar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="star01" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\star01.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="star02" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\star02.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="star03" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\star03.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="star04" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\star04.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="star05" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\star05.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="star06" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\star06.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

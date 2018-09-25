@@ -51,14 +51,15 @@ namespace StarWars
             for (var i = 0; i < __GameObjects.Length; i++)
             {
                 int r = rnd.Next(5, 50);
-                var size = rnd.Next(3, 15);
+                var size = rnd.Next(10, 30);
                 __GameObjects[i] = new Star(
                     new BaseObjectParams
                     {
                         Position = new Point(Width, (rnd.Next(0, Height) ) ),
                         Speed = new Point(rnd.Next(0, i), 0),
                         Size = new Size(size, size)
-                    });
+                    },
+                    rnd.Next(0,5));
             }
 
             //Астероиды
@@ -161,7 +162,10 @@ namespace StarWars
             {
                 __Asteroids[i].Update();
                 if (__Asteroids[i].Collision(__Bullet))
+                {
                     __Asteroids[i].Power -= __Bullet.Power();
+                    //__Bullet = null;
+                }
 
                 if (__Asteroids[i].Power <= 0)
                 {

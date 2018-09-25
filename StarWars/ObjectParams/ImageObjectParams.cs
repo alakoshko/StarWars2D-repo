@@ -13,5 +13,6 @@ namespace StarWars
 		/// Изображение
 		/// </summary>
 		public Image ObjectImage { get; set; } = Resources.bigStar2;
-	}
+
+    }
 }

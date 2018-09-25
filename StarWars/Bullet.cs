@@ -12,10 +12,12 @@ namespace StarWars
         {
             _Power = Power;
         }
+
         public override void Draw()
         {
             Game.Buffer.Graphics.DrawRectangle(Pens.OrangeRed, new Rectangle(_Position, _Size));
         }
+
         public override void Update()
         {
             _Position.X = _Position.X + _Speed.X;
