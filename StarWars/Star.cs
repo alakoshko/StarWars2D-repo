@@ -9,9 +9,11 @@ namespace StarWars
     /// <summary>Игровой объект - звезда</summary>
     class Star : GameObject
     {
-        protected static Image[] imageStars = new Image[6];
+        protected const int starImgArrCount = 6;
+        protected static Image[] imageStars = new Image[starImgArrCount];
         //protected static Random rndStarsImage = new Random();
         protected int starNumber;
+        protected int starMaxSize = 30;
 
         /// <summary>Инициализация новой звезды</summary>
         /// <param name="Position">ПОложение на игровой сцене</param>
@@ -19,6 +21,14 @@ namespace StarWars
         /// <param name="Size">Размер на игровой сцене</param>
         public Star(BaseObjectParams param, int StarNumber) : base(param) // Передача параметров в конструктор предка
         {
+            #region Exceptions
+            //Exception размера звезды
+            if (param.Size.Height > starMaxSize || param.Size.Width > starMaxSize) throw new StarWarsExceptions("Превышен максимальный размер звезды");
+
+            //Exception размера массива
+            if (StarNumber >= starImgArrCount) throw new StarWarsExceptions("Недопустимый размер массива звезд");
+            #endregion
+
             starNumber = StarNumber;
             imageStars[0] = Resources.star01;
             imageStars[1] = Resources.star02;

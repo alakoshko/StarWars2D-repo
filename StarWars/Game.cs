@@ -69,15 +69,16 @@ namespace StarWars
             for (var i = 0; i < asteroids_count; i++)
             {
                 var speed = rnd.Next(3, 10);
+
+                var Power = rnd.Next(Asteroid.powerMin, Asteroid.powerMax);
                 
-                var size = rnd.Next(25, 100);
-                var Power = size / 10;
                 __Asteroids[i] = new Asteroid(
                     new BaseObjectParams
                     {
                         Position = new Point(rnd.Next(0, Width), rnd.Next(0, Height)),
                         Speed = new Point(speed, (rnd.Next(1, speed)%2 == 0) ? -rnd.Next(1, speed): rnd.Next(1, speed)),
-                        Size = new Size(size, size)
+                        //параметр зависит от Power
+                        Size = new Size(0, 0)
                     },
                     Power
                 );
@@ -160,28 +161,29 @@ namespace StarWars
             //Двигаем астероиды
             for (var i = 0; i < __Asteroids.Length; i++)
             {
-                __Asteroids[i].Update();
                 if (__Asteroids[i].Collision(__Bullet))
                 {
-                    __Asteroids[i].Power -= __Bullet.Power();
+                    __Asteroids[i].Damage += __Bullet.Power();
                     //__Bullet = null;
                 }
 
                 if (__Asteroids[i].Power <= 0)
                 {
                     var speed = rnd.Next(3, 10);
-                    var Power = rnd.Next(1, 5);
-                    var size = rnd.Next(25, 100);
+                    var Power = rnd.Next(Asteroid.powerMin, Asteroid.powerMax);
+
                     __Asteroids[i] = new Asteroid(
                         new BaseObjectParams
                         {
                             Position = new Point(rnd.Next(0, Width), rnd.Next(0, Height)),
                             Speed = new Point(speed, (rnd.Next(1, speed) % 2 == 0) ? -rnd.Next(1, speed) : rnd.Next(1, speed)),
-                            Size = new Size(size, size)
+                            //параметр зависит от Power
+                            Size = new Size(0, 0)
                         },
                         Power
                     );
                 }
+                __Asteroids[i].Update();
             }
             
         }

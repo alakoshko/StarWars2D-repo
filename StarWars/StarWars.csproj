@@ -70,6 +70,7 @@
       <DependentUpon>SplashScreen.cs</DependentUpon>
     </Compile>
     <Compile Include="Star.cs" />
+    <Compile Include="StarWarsExceptions.cs" />
     <Compile Include="StarWarsForm.cs">
       <SubType>Form</SubType>
     </Compile>
